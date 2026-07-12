@@ -2,11 +2,14 @@ package org.example.repository;
 
 import org.example.DataBaseConnection;
 import org.example.Libro;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
+@Repository
 public class LibroRepository {
 
     // Se obtiene la conexión a la base de datos al crear el repositorio.
@@ -98,7 +101,9 @@ public class LibroRepository {
     }
 
     // Pendiente de implementar
-    public void listarLibros() {
+    public ArrayList<Libro> listarLibros() {
+
+        ArrayList<Libro> libros = new ArrayList<>();
 
         try{
             PreparedStatement pstmt = conexion.prepareStatement("SELECT * FROM libros");
@@ -109,13 +114,15 @@ public class LibroRepository {
                 String titulo = rs.getString("titulo");
                 String autor  = rs.getString("autor");
 
-                System.out.println(isbn + " | " + titulo + " | " + autor);
+                // En vez de println, agregamos al ArrayList
+                libros.add(new Libro(isbn, titulo, autor));
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+        return libros;
     }
 
     // Pendiente de implementar
