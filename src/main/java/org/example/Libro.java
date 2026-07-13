@@ -1,10 +1,20 @@
 package org.example;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "libros")
 public class Libro {
 
+    @Id
     private String ISBN;
     private String titulo;
     private String autor;
+
+    public Libro() {
+    }
 
     public Libro(String ISBN, String titulo, String autor) {
         this.ISBN = ISBN;

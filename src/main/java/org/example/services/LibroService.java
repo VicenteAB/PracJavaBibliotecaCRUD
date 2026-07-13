@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LibroService {
@@ -14,19 +15,23 @@ public class LibroService {
     private LibroRepository libroRepository;
 
     public void guardarLibro(Libro libro) {
-        libroRepository.guardarLibro(libro);
+        libroRepository.save(libro);
     }
 
     public Libro buscarPorISBN(String ISBN){
-        return libroRepository.buscarPorISBN(ISBN);
+        return libroRepository.findById(ISBN).orElse(null);
     }
 
-    public ArrayList<Libro> listarLibros(){
-        return libroRepository.listarLibros();
+    public List<Libro> listarLibros(){
+        return libroRepository.findAll();
     }
 
     public boolean eliminarLibro(String ISBN){
-        return libroRepository.eliminarLibro(ISBN);
+        if(libroRepository.existsById(ISBN)){
+            libroRepository.deleteById(ISBN);
+            return true;
+        }
+        return false;
     }
 
 }
