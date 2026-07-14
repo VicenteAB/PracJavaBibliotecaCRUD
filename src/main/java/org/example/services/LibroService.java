@@ -14,8 +14,14 @@ public class LibroService {
     @Autowired
     private LibroRepository libroRepository;
 
-    public void guardarLibro(Libro libro) {
-        libroRepository.save(libro);
+    public boolean guardarLibro(Libro libro) {
+
+        if(libroRepository.existsById(libro.getISBN())){
+            return false;
+        }else{
+            libroRepository.save(libro);
+            return true;
+        }
     }
 
     public Libro buscarPorISBN(String ISBN){
@@ -27,6 +33,7 @@ public class LibroService {
     }
 
     public boolean eliminarLibro(String ISBN){
+
         if(libroRepository.existsById(ISBN)){
             libroRepository.deleteById(ISBN);
             return true;
