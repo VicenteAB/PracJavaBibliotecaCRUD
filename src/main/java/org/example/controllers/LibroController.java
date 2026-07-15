@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import jakarta.validation.Valid;
 import org.example.Libro;
 import org.example.services.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class LibroController {
     private LibroService libroService;
 
     @PostMapping
-    public ResponseEntity<Libro> guardarLibro(@RequestBody Libro libro) {
+    public ResponseEntity<Libro> guardarLibro(@Valid @RequestBody Libro libro) {
 
         if(libroService.guardarLibro(libro)){
             return ResponseEntity.status(201).body(libro);
@@ -28,7 +29,7 @@ public class LibroController {
     }
 
     @GetMapping("/{isbn}")
-    public ResponseEntity<Libro> buscarPorISBN (@PathVariable String isbn){
+    public ResponseEntity<Libro> buscarPorISBN (@Valid @PathVariable String isbn){
 
         Libro libro = libroService.buscarPorISBN(isbn);
 
@@ -49,7 +50,7 @@ public class LibroController {
     }
 
     @DeleteMapping("/{isbn}")
-    public ResponseEntity<Boolean> eliminarLibro(@PathVariable String isbn){
+    public ResponseEntity<Boolean> eliminarLibro(@Valid @PathVariable String isbn){
 
         if(libroService.eliminarLibro(isbn)){
             return ResponseEntity.ok(true);
