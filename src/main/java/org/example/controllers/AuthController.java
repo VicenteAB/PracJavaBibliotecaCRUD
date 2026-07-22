@@ -26,10 +26,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody Usuario usuario){
+    public ResponseEntity<String> login(@RequestBody Usuario usuario){
 
-        if(usuarioService.login(usuario.getUsername(), usuario.getPassword())){
-            return ResponseEntity.ok(true);
+        String token = usuarioService.login(usuario.getUsername(), usuario.getPassword());
+
+        if(token != null){
+            return ResponseEntity.ok(token);
         }else{
             return ResponseEntity.status(401).build();
         }
