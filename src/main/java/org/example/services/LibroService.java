@@ -31,6 +31,21 @@ public class LibroService {
         return libroRepository.findAll();
     }
 
+    public boolean actualizarLibro(String ISBN, Libro libro){
+
+        if(libroRepository.existsById(ISBN)){
+
+            libro.setISBN(ISBN);
+            libroRepository.save(libro);
+
+            return true;
+
+        }else{
+            return false;
+
+        }
+    }
+
     public boolean eliminarLibro(String ISBN){
 
         if(libroRepository.existsById(ISBN)){

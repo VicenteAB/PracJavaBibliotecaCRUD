@@ -48,6 +48,16 @@ public class LibroController {
         return ResponseEntity.ok(libro);
     }
 
+    @PutMapping("/{isbn}")
+    public ResponseEntity<Boolean> actualizarLibro (@PathVariable String isbn, @Valid @RequestBody Libro libro){
+
+        if(libroService.actualizarLibro(isbn, libro)){
+            return ResponseEntity.ok(true);
+        }else{
+            return ResponseEntity.status(404).build();
+        }
+    }
+
     @DeleteMapping("/{isbn}")
     public ResponseEntity<Boolean> eliminarLibro(@Valid @PathVariable String isbn){
 
